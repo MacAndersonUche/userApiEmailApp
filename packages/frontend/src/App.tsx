@@ -4,6 +4,7 @@ import LoginForm from "./components/LoginForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import SignUpForm from "./components/SignUpForm";
+import Dummy from "./pages/Dummy";
 
 export interface ErrorInterface {
 	name?: string;
@@ -39,6 +40,7 @@ function App() {
 							/>
 						}
 					/>
+					<Route path='/api/dummy' element={<Dummy />} />
 				</Routes>
 			</div>
 		</Router>
