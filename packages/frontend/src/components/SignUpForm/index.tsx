@@ -38,33 +38,36 @@ const SignUpForm = ({
 	};
 
 	return (
-		<div className='form'>
-			<form onSubmit={handleSubmit}>
-				<FormInput
-					label='Email'
-					errorMessages={errorMessages}
-					type='email'
-					name='email'
-					required
-				/>
-				<FormInput
-					label='Username'
-					errorMessages={errorMessages}
-					type='text'
-					name='uname'
-					required
-				/>
-				<FormInput
-					label='Password'
-					errorMessages={errorMessages}
-					type='password'
-					name='pass'
-					required
-				/>
-				<div className='button-container'>
-					<input type='submit' />
-				</div>
-			</form>
+		<div className='login-form'>
+			<div className='title'>Create Account</div>
+			<div className='form'>
+				<form onSubmit={handleSubmit}>
+					<FormInput
+						label='Email'
+						errorMessages={errorMessages}
+						type='email'
+						name='email'
+						required
+					/>
+					<FormInput
+						label='Username'
+						errorMessages={errorMessages}
+						type='text'
+						name='uname'
+						required
+					/>
+					<FormInput
+						label='Password'
+						errorMessages={errorMessages}
+						type='password'
+						name='pass'
+						required
+					/>
+					<div className='button-container'>
+						<input type='submit' />
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 };

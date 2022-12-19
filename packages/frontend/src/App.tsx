@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import LoginForm from "./components/LoginForm";
-
 import "./styles.css";
+import LoginForm from "./components/LoginForm";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import SignUpForm from "./components/SignUpForm";
 
 export interface ErrorInterface {
 	name?: string;
@@ -14,20 +16,32 @@ function App() {
 	const [isSubmitted, setIsSubmitted] = useState(false);
 
 	return (
-		<div className='app'>
-			<div className='login-form'>
-				<div className='title'>Sign In</div>
-				{isSubmitted ? (
-					<div>User is successfully logged in</div>
-				) : (
-					<LoginForm
-						setIsSubmitted={setIsSubmitted}
-						setErrorMessages={setErrorMessages}
-            errorMessages={errorMessages}
+		<Router>
+			<div className='app'>
+				<Routes>
+					<Route
+						path='/'
+						element={
+							<LoginForm
+								setIsSubmitted={setIsSubmitted}
+								setErrorMessages={setErrorMessages}
+								errorMessages={errorMessages}
+							/>
+						}
 					/>
-				)}
+					<Route
+						path='/signup'
+						element={
+							<SignUpForm
+								setIsSubmitted={setIsSubmitted}
+								setErrorMessages={setErrorMessages}
+								errorMessages={errorMessages}
+							/>
+						}
+					/>
+				</Routes>
 			</div>
-		</div>
+		</Router>
 	);
 }
 

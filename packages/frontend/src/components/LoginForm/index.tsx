@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { ErrorInterface } from "../../App";
 import { database, errors } from "../../constants";
 import FormInput from "../FormInput";
@@ -14,6 +15,8 @@ const LoginForm = ({
 	setIsSubmitted,
 	errorMessages,
 }: Props) => {
+	const navigate = useNavigate();
+
 	const handleSubmit = (event: { preventDefault: () => void }) => {
 		//Prevent page reload
 		event.preventDefault();
@@ -37,27 +40,36 @@ const LoginForm = ({
 		}
 	};
 
+
+	const handleCreate = () => {
+		navigate("/signup");
+	}
+
 	return (
-		<div className='form'>
-			<form onSubmit={handleSubmit}>
-				<FormInput
-					label='Username'
-					errorMessages={errorMessages}
-					type='text'
-					name='uname'
-					required
-				/>
-				<FormInput
-					label='Password'
-					errorMessages={errorMessages}
-					type='password'
-					name='pass'
-					required
-				/>
-				<div className='button-container'>
-					<input type='submit' />
-				</div>
-			</form>
+		<div className='login-form'>
+			<div className='title'>Sign In</div>
+			<div className='form'>
+				<form onSubmit={handleSubmit}>
+					<FormInput
+						label='Username'
+						errorMessages={errorMessages}
+						type='text'
+						name='uname'
+						required
+					/>
+					<FormInput
+						label='Password'
+						errorMessages={errorMessages}
+						type='password'
+						name='pass'
+						required
+					/>
+					<div className='button-container'>
+						<input type='submit' />
+					</div>
+					<a className="clickToCreate" onClick={handleCreate}>Dont Have an Account? Click to Create</a>
+				</form>
+			</div>
 		</div>
 	);
 };
