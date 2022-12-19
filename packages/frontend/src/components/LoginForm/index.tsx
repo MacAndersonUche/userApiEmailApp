@@ -1,15 +1,19 @@
 import { ErrorInterface } from "../../App";
-import { database, errors } from "./constants";
-
+import { database, errors } from "../../constants";
+import FormInput from "../FormInput";
 
 interface Props {
-    setErrorMessages: (errorMessages: { name: string; message: string }) => void;
-    setIsSubmitted: (isSubmitted: boolean) => void;
-    errorMessages: ErrorInterface
+	setErrorMessages: (errorMessages: { name: string; message: string }) => void;
+	setIsSubmitted: (isSubmitted: boolean) => void;
+	errorMessages: ErrorInterface;
 }
 
 // JSX code for login form
-const From = ({setErrorMessages,setIsSubmitted, errorMessages }: Props) => {
+const LoginForm = ({
+	setErrorMessages,
+	setIsSubmitted,
+	errorMessages,
+}: Props) => {
 	const handleSubmit = (event: { preventDefault: () => void }) => {
 		//Prevent page reload
 		event.preventDefault();
@@ -33,24 +37,23 @@ const From = ({setErrorMessages,setIsSubmitted, errorMessages }: Props) => {
 		}
 	};
 
-	// Generate JSX code for error message
-	const renderErrorMessage = (name: string) =>
-		name === errorMessages.name && (
-			<div className='error'>{errorMessages.message}</div>
-		);
 	return (
 		<div className='form'>
 			<form onSubmit={handleSubmit}>
-				<div className='input-container'>
-					<label>Username </label>
-					<input type='text' name='uname' required />
-					{renderErrorMessage("uname")}
-				</div>
-				<div className='input-container'>
-					<label>Password </label>
-					<input type='password' name='pass' required />
-					{renderErrorMessage("pass")}
-				</div>
+				<FormInput
+					label='Username'
+					errorMessages={errorMessages}
+					type='text'
+					name='uname'
+					required
+				/>
+				<FormInput
+					label='Password'
+					errorMessages={errorMessages}
+					type='password'
+					name='pass'
+					required
+				/>
 				<div className='button-container'>
 					<input type='submit' />
 				</div>
@@ -59,4 +62,4 @@ const From = ({setErrorMessages,setIsSubmitted, errorMessages }: Props) => {
 	);
 };
 
-export default From;
+export default LoginForm;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import From from "./components/Form";
+import LoginForm from "./components/LoginForm";
 
 import "./styles.css";
 
@@ -20,7 +20,7 @@ function App() {
 				{isSubmitted ? (
 					<div>User is successfully logged in</div>
 				) : (
-					<From
+					<LoginForm
 						setIsSubmitted={setIsSubmitted}
 						setErrorMessages={setErrorMessages}
             errorMessages={errorMessages}
