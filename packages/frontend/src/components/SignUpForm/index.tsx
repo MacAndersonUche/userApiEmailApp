@@ -1,72 +1,52 @@
 import { ErrorInterface } from "../../App";
 import { database, errors } from "../../constants";
+import useAuthLogin from "../../hooks/useAuth";
 import FormInput from "../FormInput";
 
-interface Props {
-	setErrorMessages: (errorMessages: { name: string; message: string }) => void;
-	setIsSubmitted: (isSubmitted: boolean) => void;
-	errorMessages: ErrorInterface;
-}
-
 // JSX code for login form
-const SignUpForm = ({
-	setErrorMessages,
-	setIsSubmitted,
-	errorMessages,
-}: Props) => {
-	const handleSubmit = (event: { preventDefault: () => void }) => {
-		//Prevent page reload
-		event.preventDefault();
-
-		var { uname, pass } = document.forms[0];
-
-		// Find user login info
-		const userData = database.find((user) => user.username === uname.value);
-
-		// Compare user info
-		if (userData) {
-			if (userData.password !== pass.value) {
-				// Invalid password
-				setErrorMessages({ name: "pass", message: errors.pass });
-			} else {
-				setIsSubmitted(true);
-			}
-		} else {
-			// Username not found
-			setErrorMessages({ name: "uname", message: errors.uname });
-		}
-	};
-
+const SignUpForm = () => {
+	const { handleFormSubmit, data, setData } = useAuthLogin();
 	return (
-		<div className='login-form'>
-			<div className='title'>Create Account</div>
-			<div className='form'>
-				<form onSubmit={handleSubmit}>
-					<FormInput
-						label='Email'
-						errorMessages={errorMessages}
-						type='email'
-						name='email'
-						required
-					/>
-					<FormInput
-						label='Username'
-						errorMessages={errorMessages}
-						type='text'
-						name='uname'
-						required
-					/>
-					<FormInput
-						label='Password'
-						errorMessages={errorMessages}
-						type='password'
-						name='pass'
-						required
-					/>
-					<div className='button-container'>
-						<input type='submit' />
-					</div>
-				</form>
+		<div className='login-container'>
+			<div className='card'>
+				<div className='container'>
+						<form onSubmit={handleFormSubmit}>
+							<h1>Create Account</h1>
+							<FormInput
+								type='email'
+								name='email'
+								value={data.username}
+								onChange={(event) =>
+									setData({ ...data, email: event.target.value })
+								}
+								label='Email'
+								placeholder='Enter your Email'
+							/>
+							<FormInput
+								type='text'
+								value={data.username}
+								onChange={(event) =>
+									setData({ ...data, username: event.target.value })
+								}
+								name='username'
+								label='Username'
+								placeholder='Enter your username'
+							/>
+							<FormInput
+								type='password'
+								value={data.password}
+								onChange={(event) =>
+									setData({ ...data, password: event.target.value })
+								}
+								name='password'
+								label='Password'
+								placeholder='Enter your password'
+							/>
+							<div className='button-container'>
+								<input type='submit' />
+							</div>
+						</form>
+				</div>
 			</div>
 		</div>
 	);

@@ -25,7 +25,7 @@ export const AppContext = createContext<{
 }>({
 	state: initialState,
 	dispatch: () => null,
-}); 
+});
 
 function App() {
 	// React States
@@ -42,25 +42,14 @@ function App() {
 		>
 			<Router>
 				<div className='app'>
-					{!state.isAuthenticated ? <Routes>
-						<Route
-							path='/'
-							element={
-								<LoginForm
-								/>
-							}
-						/>
-						<Route
-							path='/register'
-							element={
-								<SignUpForm
-									setIsSubmitted={setIsSubmitted}
-									setErrorMessages={setErrorMessages}
-									errorMessages={errorMessages}
-								/>
-							}
-						/>
-					</Routes>: <Dummy />}
+					{!state.isAuthenticated ? (
+						<Routes>
+							<Route path='/' element={<LoginForm />} />
+							<Route path='/register' element={<SignUpForm />} />
+						</Routes>
+					) : (
+						<Dummy />
+					)}
 				</div>
 			</Router>
 		</AppContext.Provider>
