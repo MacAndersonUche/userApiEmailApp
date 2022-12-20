@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import useAuthLogin from "../../hooks/useAuth";
 import FormInput from "../FormInput";
 export const Login = () => {
@@ -39,7 +40,7 @@ export const Login = () => {
 							{data.isSubmitting ? "Loading..." : "Login"}
 						</button>
 
-						<a href='/register'>Don't have an account?</a>
+						<Link to='/register'>Don't have an account?</Link>
 					</form>
 				</div>
 			</div>

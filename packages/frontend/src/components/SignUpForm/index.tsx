@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useAuthLogin from "../../hooks/useAuth";
 import FormInput from "../FormInput";
 
@@ -43,6 +44,7 @@ const SignUpForm = () => {
 						<div className='button-container'>
 							<input type='submit' />
 						</div>
+						<Link to='/'>Already Have an Account?</Link>
 					</form>
 				</div>
 			</div>
