@@ -34,6 +34,7 @@ const useAuthLogin = (location: string, creation: boolean = false) => {
 		})
 			.then((res) => {
 				if (res.ok) {
+					
 					return res.json();
 				}
 				throw res;

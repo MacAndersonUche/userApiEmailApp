@@ -4,9 +4,9 @@ import LoginForm from "./components/LoginForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import SignUpForm from "./components/SignUpForm";
-import Dummy from "./pages/Dummy";
 import { State } from "./types/user";
 import { reducer } from "./reducers";
+import HomePage from "./pages/HomePage";
 
 export interface ErrorInterface {
 	name?: string;
@@ -38,16 +38,16 @@ function App() {
 			}}
 		>
 			<Router>
-				<div className='app'>
-					{!state.isAuthenticated ? (
+				{!state.isAuthenticated ? (
+					<div className="app">
 						<Routes>
 							<Route path='/' element={<LoginForm />} />
 							<Route path='/register' element={<SignUpForm />} />
 						</Routes>
-					) : (
-						<Dummy />
-					)}
-				</div>
+					</div>
+				) : (
+					<HomePage />
+				)}
 			</Router>
 		</AppContext.Provider>
 	);
