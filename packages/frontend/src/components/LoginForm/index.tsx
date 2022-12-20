@@ -1,6 +1,5 @@
 
 import React from "react";
-import { AppContext } from "../../App";
 import useAuthLogin from "../../hooks/useAuth";
 import FormInput from "../FormInput";
 export const Login = () => {

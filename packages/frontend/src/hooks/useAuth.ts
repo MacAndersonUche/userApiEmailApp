@@ -1,6 +1,5 @@
 import React from "react";
 import { AppContext } from "../App";
-import { ApiBody } from "../types/api";
 
 const useAuthLogin = (location: string, creation: boolean = false) => {
     const { dispatch } = React.useContext(AppContext);

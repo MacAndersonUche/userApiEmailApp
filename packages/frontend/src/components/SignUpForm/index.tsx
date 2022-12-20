@@ -1,7 +1,7 @@
 import useAuthLogin from "../../hooks/useAuth";
 import FormInput from "../FormInput";
 
-// JSX code for login form
+
 const SignUpForm = () => {
 	const { handleFormSubmit, data, setData } = useAuthLogin("http://localhost:5100/signup", true);
 	return (
