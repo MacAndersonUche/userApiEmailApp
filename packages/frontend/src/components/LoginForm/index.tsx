@@ -1,77 +1,92 @@
-import { useNavigate } from "react-router-dom";
-import { ErrorInterface } from "../../App";
-import { database, errors } from "../../constants";
+import React from "react";
+import { AppContext } from "../../App";
 import FormInput from "../FormInput";
-
-interface Props {
-	setErrorMessages: (errorMessages: { name: string; message: string }) => void;
-	setIsSubmitted: (isSubmitted: boolean) => void;
-	errorMessages: ErrorInterface;
-}
-
-// JSX code for login form
-const LoginForm = ({
-	setErrorMessages,
-	setIsSubmitted,
-	errorMessages,
-}: Props) => {
-	const navigate = useNavigate();
-
-	const handleSubmit = (event: { preventDefault: () => void }) => {
-		//Prevent page reload
-		event.preventDefault();
-
-		var { uname, pass } = document.forms[0];
-
-		// Find user login info
-		const userData = database.find((user) => user.username === uname.value);
-
-		// Compare user info
-		if (userData) {
-			if (userData.password !== pass.value) {
-				// Invalid password
-				setErrorMessages({ name: "pass", message: errors.pass });
-			} else {
-				setIsSubmitted(true);
-			}
-		} else {
-			// Username not found
-			setErrorMessages({ name: "uname", message: errors.uname });
-		}
+export const Login = () => {
+	const { dispatch } = React.useContext(AppContext);
+	const initialState = {
+		username: "",
+		password: "",
+		isSubmitting: false,
+		errorMessage: null,
 	};
-
-
-	const handleCreate = () => {
-		navigate("/signup");
-	}
-
+	const [data, setData] = React.useState(initialState);
+	const handleFormSubmit = (event: { preventDefault: () => void }) => {
+		event.preventDefault();
+		setData({
+			...data,
+			isSubmitting: true,
+			errorMessage: null,
+		});
+		fetch("http://localhost:5100/login", {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				username: data.username,
+				password: data.password,
+			}),
+		})
+			.then((res) => {
+				if (res.ok) {
+					return res.json();
+				}
+				throw res;
+			})
+			.then((resJson) => {
+				dispatch({
+					type: "LOGIN",
+					payload: resJson,
+				});
+			})
+			.catch((error) => {
+				setData({
+					...data,
+					isSubmitting: false,
+					errorMessage: error.message || error.statusText,
+				});
+			});
+	};
 	return (
-		<div className='login-form'>
-			<div className='title'>Sign In</div>
-			<div className='form'>
-				<form onSubmit={handleSubmit}>
-					<FormInput
-						label='Username'
-						errorMessages={errorMessages}
-						type='text'
-						name='uname'
-						required
-					/>
-					<FormInput
-						label='Password'
-						errorMessages={errorMessages}
-						type='password'
-						name='pass'
-						required
-					/>
-					<div className='button-container'>
-						<input type='submit' />
-					</div>
-					<a className="clickToCreate" onClick={handleCreate}>Dont Have an Account? Click to Create</a>
-				</form>
+		<div className='login-container'>
+			<div className='card'>
+				<div className='container'>
+					<form onSubmit={handleFormSubmit}>
+						<h1>Login</h1>
+						<FormInput
+							type='text'
+							value={data.username}
+							onChange={(event) =>
+								setData({ ...data, username: event.target.value })
+							}
+							name='username'
+							label='Username'
+							placeholder="Enter your username"
+						/>
+						<FormInput
+							type='password'
+							value={data.password}
+							onChange={(event) =>
+								setData({ ...data, password: event.target.value })
+							}
+							name='password'
+							label='Password'
+							placeholder="Enter your password"
+						/>
+
+						{data.errorMessage && (
+							<span className='form-error'>{data.errorMessage}</span>
+						)}
+
+						<button disabled={data.isSubmitting}>
+							{data.isSubmitting ? "Loading..." : "Login"}
+						</button>
+
+						<a href='/register'>Don't have an account?</a>
+					</form>
+				</div>
 			</div>
 		</div>
 	);
 };
-
-export default LoginForm;
+export default Login;
