@@ -1,16 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AppContext } from "../../App";
+import useAuthLogin from "../../hooks/useAuth";
 
 export default function Navbar() {
-	const { dispatch } = React.useContext(AppContext);
 
-	const handleLogout = () => {
-		dispatch({
-			type: "LOGOUT",
-		});
-
-	};
+    const {handleLogout} = useAuthLogin("http://localhost:5100/logout")
+    
 
 	return (
 		<nav className='navigation'>

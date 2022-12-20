@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../../components/NavBar";
-import { User } from "../../types/user";
 import { Routes, Route } from "react-router-dom";
 import AllUsers from "../AllUsers";
 import ChatPage from "../ChatPage";

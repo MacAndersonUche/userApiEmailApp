@@ -1,11 +1,13 @@
 import React from "react";
 import { AppContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const useAuthLogin = (location: string, creation: boolean = false) => {
-    const { dispatch } = React.useContext(AppContext);
+	const navigate = useNavigate();
+	const { dispatch } = React.useContext(AppContext);
 	const initialState = {
 		username: "",
-        email: "",
+		email: "",
 		password: "",
 		isSubmitting: false,
 		errorMessage: null,
@@ -23,18 +25,19 @@ const useAuthLogin = (location: string, creation: boolean = false) => {
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: !creation? JSON.stringify({
-				username: data.username,
-				password: data.password,
-			}) : JSON.stringify({
-                username: data.username,
-                email: data.email,
-                password: data.password,
-            }),
+			body: !creation
+				? JSON.stringify({
+						username: data.username,
+						password: data.password,
+				  })
+				: JSON.stringify({
+						username: data.username,
+						email: data.email,
+						password: data.password,
+				  }),
 		})
 			.then((res) => {
 				if (res.ok) {
-					
 					return res.json();
 				}
 				throw res;
@@ -54,11 +57,26 @@ const useAuthLogin = (location: string, creation: boolean = false) => {
 			});
 	};
 
-    return {
-        handleFormSubmit,
-        data,
-        setData
-    }
-}
+	const handleLogout = () => {
+		dispatch({
+			type: "LOGOUT",
+		});
 
-export default useAuthLogin
+		setData({
+			...data,
+			isSubmitting: false,
+			errorMessage: null,
+		});
+
+		navigate("/");
+	};
+
+	return {
+		handleFormSubmit,
+		handleLogout,
+		data,
+		setData,
+	};
+};
+
+export default useAuthLogin;
