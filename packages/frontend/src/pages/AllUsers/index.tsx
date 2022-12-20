@@ -12,15 +12,17 @@ const AllUsers = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
+            console.log(localStorage.getItem("token"));
+            
 
             try {
                 const response = await fetch("http://localhost:5100/api/getallusers", {
                     method: "GET",
                     headers: {
-                        "Content-Type": "application/json",
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
                 });
+
 
                 if (response.ok) {
                     const data = await response.json();
@@ -31,7 +33,7 @@ const AllUsers = () => {
                 }
               
             } catch (error) {
-                
+                console.log(error)
             }
 
 			
