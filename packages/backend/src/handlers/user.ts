@@ -14,21 +14,35 @@ export const createNewUser = async (req, res) => {
   
     const token = createJWT(user);
     res.json({ token });
+    // res.json({ user });
   };
 
-export const signin = async (req, res) => {
-  const user = await prisma.user.findUnique({
-    where: { id: req.body.username }  && { id: req.body.email },
-  });
+  export const signin = async (req, res) => {
+    const user = await prisma.user.findUnique({
+      where: { username: req.body.username },
+    });
 
-  const isValid = await comparePasswords(req.body.password, user.password);
+    if (!user) {
+      res.status(401);
+      res.send("Invalid username or password");
+      return;
+    }
+  
+    const isValid = await comparePasswords(req.body.password, user.password);
+  
+    if (!isValid) {
+      res.status(401);
+      res.send("Invalid username or password");
+      return;
+    }
+  
+    const token = createJWT(user);
+    res.json({ token });
+  };
 
-  if (!isValid) {
-    res.status(401);
-    res.send("Invalid username or password");
-    return;
-  }
+  
+  export const findAll = async (req, res) => {
+    const users = await prisma.user.findMany()
 
-  const token = createJWT(user);
-  res.json({ token });
-};
+    res.json({ users });
+  };
