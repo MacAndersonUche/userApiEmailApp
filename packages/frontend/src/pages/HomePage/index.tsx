@@ -7,34 +7,9 @@ import ChatPage from "../ChatPage";
 import EmailPage from "../EmailCreation";
 
 const HomePage = () => {
-	const [data, setData] = React.useState<User>({
-		id: "",
-		createdAt: new Date(),
-		username: "",
-		email: "",
-		password: "",
-	});
-
-	React.useEffect(() => {
-		const fetchData = async () => {
-			const response = await fetch("http://localhost:5100/api/getallusers", {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${localStorage.getItem("token")}`,
-				},
-			});
-			const data = await response.json();
-			console.log(data);
-
-			setData(data);
-		};
-		fetchData();
-	}, [data]);
 	return (
 		<div>
 			<Navbar />
-
 			<Routes>
 				<Route
 					path='/'
