@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import SignUpForm from "./components/SignUpForm";
 import Dummy from "./pages/Dummy";
-import { ActionType, State, User } from "./types/user";
+import { State } from "./types/user";
 import { reducer } from "./reducers";
 
 export interface ErrorInterface {
@@ -28,10 +28,7 @@ export const AppContext = createContext<{
 });
 
 function App() {
-	// React States
-	const [errorMessages, setErrorMessages] = useState<ErrorInterface>({});
 	const [state, dispatch] = React.useReducer(reducer, initialState);
-	const [isSubmitted, setIsSubmitted] = useState(false);
 
 	return (
 		<AppContext.Provider
