@@ -3,7 +3,7 @@ import FormInput from "../FormInput";
 
 // JSX code for login form
 const SignUpForm = () => {
-	const { handleFormSubmit, data, setData } = useAuthLogin();
+	const { handleFormSubmit, data, setData } = useAuthLogin("http://localhost:5100/signup", true);
 	return (
 		<div className='login-container'>
 			<div className='card'>
@@ -13,7 +13,7 @@ const SignUpForm = () => {
 						<FormInput
 							type='email'
 							name='email'
-							value={data.username}
+							value={data.email}
 							onChange={(event) =>
 								setData({ ...data, email: event.target.value })
 							}

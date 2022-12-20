@@ -1,7 +1,8 @@
 import React from "react";
 import { AppContext } from "../App";
+import { ApiBody } from "../types/api";
 
-const useAuthLogin = () => {
+const useAuthLogin = (location: string, creation: boolean = false) => {
     const { dispatch } = React.useContext(AppContext);
 	const initialState = {
 		username: "",
@@ -18,15 +19,19 @@ const useAuthLogin = () => {
 			isSubmitting: true,
 			errorMessage: null,
 		});
-		fetch("http://localhost:5100/login", {
+		fetch(location, {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({
+			body: !creation? JSON.stringify({
 				username: data.username,
 				password: data.password,
-			}),
+			}) : JSON.stringify({
+                username: data.username,
+                email: data.email,
+                password: data.password,
+            }),
 		})
 			.then((res) => {
 				if (res.ok) {

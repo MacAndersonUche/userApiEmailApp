@@ -1,9 +1,10 @@
+
 import React from "react";
 import { AppContext } from "../../App";
 import useAuthLogin from "../../hooks/useAuth";
 import FormInput from "../FormInput";
 export const Login = () => {
-   const {handleFormSubmit, data, setData} = useAuthLogin()
+   const {handleFormSubmit, data, setData} = useAuthLogin("http://localhost:5100/login")
 	return (
 		<div className='login-container'>
 			<div className='card'>
